@@ -3,15 +3,17 @@ import { Form, Button } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 
 const BookForm = (props) => {
-  const [book, setBook] = useState({
-    comicbookname: props.book ? props.book.comicbookname : "",
-    publisher: props.book ? props.book.publisher : "",
-    quantity: props.book ? props.book.quantity : "",
-    date: props.book ? props.book.date : "",
+  const [comicbook, setBook] = useState(() => {
+    return {
+      comicbookname: props.comicbook ? props.comicbook.comicbookname : "",
+      publisher: props.comicbook ? props.comicbook.publisher : "",
+      quantity: props.comicbook ? props.comicbook.quantity : "",
+      date: props.comicbook ? props.comicbook.date : "",
+    };
   });
 
   const [errorMsg, setErrorMsg] = useState("");
-  const { comicbookname, publisher, quantity } = book;
+  const { comicbookname, publisher, quantity } = comicbook;
 
   const handleOnSubmit = (event) => {
     event.preventDefault();
@@ -24,14 +26,14 @@ const BookForm = (props) => {
     });
 
     if (allFieldsFilled) {
-      const book = {
+      const comicbook = {
         id: uuidv4(),
         comicbookname,
         publisher,
         quantity,
         date: new Date(),
       };
-      props.handleOnSubmit(book);
+      props.handleOnSubmit(comicbook);
     } else {
       errorMsg = "Please fill out all the fields.";
     }
